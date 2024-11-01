@@ -1,0 +1,73 @@
+/*
+Pricing table front end style
+Author : wpdevart LLC
+*/
+.wpdevart_pt_main .wpdevart_pt_column,.wpdevart_pt_column_coneiner{
+	display:inline-block;
+	/*overflow:hidden;*/
+	vertical-align:bottom;
+	position:relative;
+}
+.wpdevart_pt_column_adit_txt{
+	/*visibility:visible;*/
+}
+.wpdevart_pt_column {
+	overflow:hidden;
+}
+.wpdevart_first_feature{
+	border-top-width:0px !important;
+}
+.wpdevart_last_feature{
+	border-bottom-width:0px !important;
+}
+.wpdevart_pt_column_coneiner{
+	line-height: 0;
+}
+.wpdevart_pt_mobile .wpdevart_pt_column_coneiner{
+	margin-bottom:5px !important;
+}
+.wpdevart_pt_button{
+	font-size:0;
+}
+.wpdevart_pt_column,
+.wpdevart_pt_info_group,
+.wpdevart_pt_info_head,
+.wpdevart_pt_info_fotter,
+.wpdevart_pt_column_adit_txt {
+	line-height: 1.2;
+	/*box-sizing: content-box;*/
+}
+.wpdevart_pt_main .wpdevart_pt_button a:hover{
+	box-shadow: none !important;
+}
+.wpdevart_pt_main .wpdevart_pt_button a{
+	box-shadow: none !important;
+}
+.wpdevart_pt_column{
+	width:100%
+}
+.wpdevart_hidden{
+	display:none;
+}
+.wpdevart_pt_mobile .wpdevart_pt_column_coneiner{
+	 transform: scale(1.0,1.0) !important;
+    -webkit-transform: scale(1.0,1.0) !important;
+    -moz-transform: scale(1.0,1.0) !important;
+}
+/*For button border animation type*/
+@-webkit-keyframes wpdevart-button-bottom-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+@keyframes wpdevart-button-bottom-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}

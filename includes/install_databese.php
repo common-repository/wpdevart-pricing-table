@@ -1,0 +1,142 @@
+<?php
+//instaling databese
+class wpda_pricing_table_databese{
+	public static $table_names;
+	function __construct(){
+		global $wpdb;
+		self::$table_names=array(
+			'columns'=>$wpdb->prefix.'wpda_pricing_tables',
+			'theme'=>$wpdb->prefix.'wpda_pricing_table_theme'
+		);
+	}
+	
+	/*###################### Pricing table columns function ##################*/	
+	
+	
+	public function instal_pricing_table_columns(){
+		global $wpdb;
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		//install columns
+		$table_name =  self::$table_names['columns'];	
+		$charset_collate = $wpdb->get_charset_collate();
+		//img
+		$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+		`id` int(10) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(512) NOT NULL,
+		  `columns` longtext NOT NULL,
+		  `widget_options` longtext NOT NULL,
+			UNIQUE KEY id (id)		
+		) $charset_collate;";	
+		dbDelta( $sql );
+		$this->install_tables();		
+	}
+
+	/*###################### Theme table function ##################*/
+	
+	public function install_theme_tabel(){
+		global $wpdb;
+		//install themes
+		$table_name =  self::$table_names['theme'];	
+		$charset_collate = $wpdb->get_charset_collate();
+		$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+		`id` int(10) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(512) NOT NULL,
+		  `option_value` longtext NOT NULL,
+		  `default` tinyint(4) NOT NULL,
+			UNIQUE KEY id (id)		
+		) $charset_collate;";
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+		$this->install_themes();
+	}
+	
+	/*###################### Pricing table Themes function ##################*/	
+	
+	private function install_themes(){
+		global $wpdb;
+		$themes[0]['id']=100;
+		$themes[0]['name']='Demo 1-1';
+		$themes[0]['option_value']='{\"name\":\"Demo 1-1\",\"column_type\":\"normal\",\"column_width\":\"280\",\"column_min_width\":\"180\",\"column_scale\":\"0\",\"column_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_outside_box_shadow\":\"\",\"column_outside_border_type\":\"solid\",\"column_outside_border_width\":{\"top\":\"1\",\"right\":\"1\",\"bottom\":\"1\",\"left\":\"1\"},\"column_outside_border_color\":\"#c9c9c9\",\"column_outside_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"text_align\":\"center\",\"column_title_bg_color\":{\"color1\":\"#3f7bdf\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_title_txt_color\":\"#ffffff\",\"column_title_font_size\":\"28\",\"column_title_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_title_padding\":{\"top\":\"15\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_border_type\":\"solid\",\"column_title_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_title_border_color\":\"#cccccc\",\"column_price_bg_color\":{\"color1\":\"#3f7bdf\",\"color2\":\"\",\"gradient\":\"none\"},\"column_price_txt_color\":\"#ffffff\",\"column_price_font_size\":\"28\",\"column_price_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_price_padding\":{\"top\":\"10\",\"right\":\"0\",\"bottom\":\"30\",\"left\":\"0\"},\"column_price_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_price_border_type\":\"solid\",\"column_price_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_price_border_color\":\"#cccccc\",\"column_feature_bg_color\":{\"color1\":\"#f5f7ff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_odd_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_txt_color\":\"#323a46\",\"column_feature_font_size\":\"15\",\"column_feature_font_family\":\"Segoe UI\",\"column_feature_padding\":{\"top\":\"12\",\"right\":\"0\",\"bottom\":\"12\",\"left\":\"0\"},\"column_feature_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_feature_border_type\":\"dashed\",\"column_feature_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"1\"},\"column_feature_border_color\":\"#cccccc\",\"column_aditional_text\":\"\",\"column_aditional_text_position\":\"above_the_title\",\"column_additional_text_border_type\":\"solid\",\"column_additional_text_border_width\":\"1\",\"column_additional_text_border_color\":\"#ffffff\",\"column_additional_text_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_additional_text_bg_color\":{\"color1\":\"#1e73be\",\"color2\":\"\",\"gradient\":\"none\"},\"column_additional_text_color\":\"#ffffff\",\"column_additional_text_conteiner_width\":\"100\",\"column_additional_text_conteiner_align\":\"center\",\"column_additional_text_align\":\"center\",\"column_additional_text_font_size\":\"18\",\"column_additional_text_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_additional_text_distance_top_bottom\":{\"top\":\"0\",\"bottom\":\"5\"},\"column_additional_text_padding\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_bg_row_color\":{\"color1\":\"#f5f5f5\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_row_padding\":{\"top\":\"20\",\"right\":\"0\",\"bottom\":\"20\",\"left\":\"0\"},\"column_button_row_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_row_border_type\":\"solid\",\"column_button_row_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_button_row_border_color\":\"#cccccc\",\"column_button_themes\":\"standart\",\"column_button_bg_color\":{\"color1\":\"\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_txt_color\":\"#323a46\",\"column_button_border_color\":\"#3f7bdf\",\"column_button_bg_color_hover\":{\"color1\":\"#357fe8\",\"color2\":\"#81d742\",\"gradient\":\"none\"},\"column_button_txt_color_hover\":\"#ffffff\",\"column_button_border_color_hover\":\"#000000\",\"column_button_border_type\":\"solid\",\"column_button_border_width\":\"1\",\"column_button_border_radius\":\"0\",\"column_button_font_size\":\"18\",\"column_button_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_button_padding\":{\"top\":\"10\",\"right\":\"20\",\"bottom\":\"10\",\"left\":\"20\"},\"column_button_margin\":{\"top\":\"0\",\"right\":\"5\",\"bottom\":\"0\",\"left\":\"5\"},\"column_animation_type\":\"random\",\"column_animation_delay\":\"0\"}';
+		$themes[0]['default']=1;
+
+		$themes[1]['id']=101;
+		$themes[1]['name']='Demo 1-2';
+		$themes[1]['option_value']='{\"name\":\"Demo 1-2\",\"column_type\":\"normal\",\"column_width\":\"280\",\"column_min_width\":\"180\",\"column_scale\":\"0\",\"column_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_outside_box_shadow\":\"\",\"column_outside_border_type\":\"solid\",\"column_outside_border_width\":{\"top\":\"1\",\"right\":\"1\",\"bottom\":\"1\",\"left\":\"1\"},\"column_outside_border_color\":\"#c9c9c9\",\"column_outside_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"text_align\":\"center\",\"column_title_bg_color\":{\"color1\":\"#3f7bdf\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_title_txt_color\":\"#ffffff\",\"column_title_font_size\":\"28\",\"column_title_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_title_padding\":{\"top\":\"15\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_border_type\":\"solid\",\"column_title_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_title_border_color\":\"#cccccc\",\"column_price_bg_color\":{\"color1\":\"#3f7bdf\",\"color2\":\"\",\"gradient\":\"none\"},\"column_price_txt_color\":\"#ffffff\",\"column_price_font_size\":\"28\",\"column_price_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_price_padding\":{\"top\":\"10\",\"right\":\"0\",\"bottom\":\"30\",\"left\":\"0\"},\"column_price_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_price_border_type\":\"solid\",\"column_price_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_price_border_color\":\"#cccccc\",\"column_feature_bg_color\":{\"color1\":\"#f5f7ff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_odd_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_txt_color\":\"#323a46\",\"column_feature_font_size\":\"15\",\"column_feature_font_family\":\"Segoe UI\",\"column_feature_padding\":{\"top\":\"12\",\"right\":\"0\",\"bottom\":\"12\",\"left\":\"0\"},\"column_feature_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_feature_border_type\":\"dashed\",\"column_feature_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"1\"},\"column_feature_border_color\":\"#cccccc\",\"column_aditional_text\":\"Most populiar\",\"column_aditional_text_position\":\"above_column\",\"column_additional_text_border_type\":\"solid\",\"column_additional_text_border_width\":\"1\",\"column_additional_text_border_color\":\"#ffffff\",\"column_additional_text_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_additional_text_bg_color\":{\"color1\":\"#3f7bdf\",\"color2\":\"\",\"gradient\":\"none\"},\"column_additional_text_color\":\"#ffffff\",\"column_additional_text_conteiner_width\":\"100\",\"column_additional_text_conteiner_align\":\"center\",\"column_additional_text_align\":\"center\",\"column_additional_text_font_size\":\"18\",\"column_additional_text_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_additional_text_distance_top_bottom\":{\"top\":\"0\",\"bottom\":\"2\"},\"column_additional_text_padding\":{\"top\":\"5\",\"right\":\"0\",\"bottom\":\"5\",\"left\":\"0\"},\"column_button_bg_row_color\":{\"color1\":\"#f5f5f5\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_row_padding\":{\"top\":\"20\",\"right\":\"0\",\"bottom\":\"20\",\"left\":\"0\"},\"column_button_row_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_row_border_type\":\"solid\",\"column_button_row_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_button_row_border_color\":\"#cccccc\",\"column_button_themes\":\"standart\",\"column_button_bg_color\":{\"color1\":\"\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_txt_color\":\"#323a46\",\"column_button_border_color\":\"#3f7bdf\",\"column_button_bg_color_hover\":{\"color1\":\"#357fe8\",\"color2\":\"#81d742\",\"gradient\":\"none\"},\"column_button_txt_color_hover\":\"#ffffff\",\"column_button_border_color_hover\":\"#000000\",\"column_button_border_type\":\"solid\",\"column_button_border_width\":\"1\",\"column_button_border_radius\":\"0\",\"column_button_font_size\":\"18\",\"column_button_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_button_padding\":{\"top\":\"10\",\"right\":\"20\",\"bottom\":\"10\",\"left\":\"20\"},\"column_button_margin\":{\"top\":\"0\",\"right\":\"5\",\"bottom\":\"0\",\"left\":\"5\"},\"column_animation_type\":\"random\",\"column_animation_delay\":\"0\"}';
+		$themes[1]['default']=0;
+
+		$themes[2]['id']=102;
+		$themes[2]['name']='Demo 2-1';
+		$themes[2]['option_value']='{\"name\":\"Demo 2-1\",\"column_type\":\"normal\",\"column_width\":\"280\",\"column_min_width\":\"180\",\"column_scale\":\"0\",\"column_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_outside_box_shadow\":\"\",\"column_outside_border_type\":\"solid\",\"column_outside_border_width\":{\"top\":\"1\",\"right\":\"1\",\"bottom\":\"1\",\"left\":\"1\"},\"column_outside_border_color\":\"#c9c9c9\",\"column_outside_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"text_align\":\"center\",\"column_title_bg_color\":{\"color1\":\"#e0b83e\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_title_txt_color\":\"#ffffff\",\"column_title_font_size\":\"28\",\"column_title_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_title_padding\":{\"top\":\"5\",\"right\":\"0\",\"bottom\":\"5\",\"left\":\"0\"},\"column_title_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_border_type\":\"solid\",\"column_title_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_title_border_color\":\"#cccccc\",\"column_price_bg_color\":{\"color1\":\"#e0c87f\",\"color2\":\"\",\"gradient\":\"none\"},\"column_price_txt_color\":\"#ffffff\",\"column_price_font_size\":\"28\",\"column_price_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_price_padding\":{\"top\":\"15\",\"right\":\"0\",\"bottom\":\"15\",\"left\":\"0\"},\"column_price_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_price_border_type\":\"solid\",\"column_price_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_price_border_color\":\"#cccccc\",\"column_feature_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_odd_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_txt_color\":\"#323a46\",\"column_feature_font_size\":\"15\",\"column_feature_font_family\":\"Segoe UI\",\"column_feature_padding\":{\"top\":\"12\",\"right\":\"0\",\"bottom\":\"12\",\"left\":\"0\"},\"column_feature_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_feature_border_type\":\"dashed\",\"column_feature_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"1\"},\"column_feature_border_color\":\"#cccccc\",\"column_aditional_text\":\"\",\"column_aditional_text_position\":\"above_the_title\",\"column_additional_text_border_type\":\"solid\",\"column_additional_text_border_width\":\"1\",\"column_additional_text_border_color\":\"#ffffff\",\"column_additional_text_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_additional_text_bg_color\":{\"color1\":\"#1e73be\",\"color2\":\"\",\"gradient\":\"none\"},\"column_additional_text_color\":\"#ffffff\",\"column_additional_text_conteiner_width\":\"100\",\"column_additional_text_conteiner_align\":\"center\",\"column_additional_text_align\":\"center\",\"column_additional_text_font_size\":\"18\",\"column_additional_text_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_additional_text_distance_top_bottom\":{\"top\":\"0\",\"bottom\":\"5\"},\"column_additional_text_padding\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_bg_row_color\":{\"color1\":\"#f5f5f5\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_row_padding\":{\"top\":\"20\",\"right\":\"0\",\"bottom\":\"20\",\"left\":\"0\"},\"column_button_row_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_row_border_type\":\"solid\",\"column_button_row_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_button_row_border_color\":\"#cccccc\",\"column_button_themes\":\"standart\",\"column_button_bg_color\":{\"color1\":\"\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_txt_color\":\"#323a46\",\"column_button_border_color\":\"#e0b83e\",\"column_button_bg_color_hover\":{\"color1\":\"#e0b83e\",\"color2\":\"#81d742\",\"gradient\":\"none\"},\"column_button_txt_color_hover\":\"#ffffff\",\"column_button_border_color_hover\":\"#e0b83e\",\"column_button_border_type\":\"solid\",\"column_button_border_width\":\"1\",\"column_button_border_radius\":\"0\",\"column_button_font_size\":\"18\",\"column_button_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_button_padding\":{\"top\":\"10\",\"right\":\"20\",\"bottom\":\"10\",\"left\":\"20\"},\"column_button_margin\":{\"top\":\"0\",\"right\":\"5\",\"bottom\":\"0\",\"left\":\"5\"},\"column_animation_type\":\"random\",\"column_animation_delay\":\"0\"}';
+		$themes[2]['default']=0;
+
+		$themes[3]['id']=103;
+		$themes[3]['name']='Demo 2-2';
+		$themes[3]['option_value']='{\"name\":\"Demo 2-2\",\"column_type\":\"normal\",\"column_width\":\"280\",\"column_min_width\":\"180\",\"column_scale\":\"0\",\"column_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_outside_box_shadow\":\"\",\"column_outside_border_type\":\"solid\",\"column_outside_border_width\":{\"top\":\"1\",\"right\":\"1\",\"bottom\":\"1\",\"left\":\"1\"},\"column_outside_border_color\":\"#c9c9c9\",\"column_outside_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"text_align\":\"center\",\"column_title_bg_color\":{\"color1\":\"#1da01b\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_title_txt_color\":\"#ffffff\",\"column_title_font_size\":\"28\",\"column_title_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_title_padding\":{\"top\":\"5\",\"right\":\"0\",\"bottom\":\"5\",\"left\":\"0\"},\"column_title_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_border_type\":\"solid\",\"column_title_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_title_border_color\":\"#cccccc\",\"column_price_bg_color\":{\"color1\":\"#6ac16c\",\"color2\":\"\",\"gradient\":\"none\"},\"column_price_txt_color\":\"#ffffff\",\"column_price_font_size\":\"28\",\"column_price_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_price_padding\":{\"top\":\"15\",\"right\":\"0\",\"bottom\":\"15\",\"left\":\"0\"},\"column_price_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_price_border_type\":\"solid\",\"column_price_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_price_border_color\":\"#cccccc\",\"column_feature_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_odd_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_txt_color\":\"#323a46\",\"column_feature_font_size\":\"15\",\"column_feature_font_family\":\"Segoe UI\",\"column_feature_padding\":{\"top\":\"12\",\"right\":\"0\",\"bottom\":\"12\",\"left\":\"0\"},\"column_feature_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_feature_border_type\":\"dashed\",\"column_feature_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"1\"},\"column_feature_border_color\":\"#cccccc\",\"column_aditional_text\":\"\",\"column_aditional_text_position\":\"above_the_title\",\"column_additional_text_border_type\":\"solid\",\"column_additional_text_border_width\":\"1\",\"column_additional_text_border_color\":\"#ffffff\",\"column_additional_text_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_additional_text_bg_color\":{\"color1\":\"#1e73be\",\"color2\":\"\",\"gradient\":\"none\"},\"column_additional_text_color\":\"#ffffff\",\"column_additional_text_conteiner_width\":\"100\",\"column_additional_text_conteiner_align\":\"center\",\"column_additional_text_align\":\"center\",\"column_additional_text_font_size\":\"18\",\"column_additional_text_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_additional_text_distance_top_bottom\":{\"top\":\"0\",\"bottom\":\"5\"},\"column_additional_text_padding\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_bg_row_color\":{\"color1\":\"#f5f5f5\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_row_padding\":{\"top\":\"20\",\"right\":\"0\",\"bottom\":\"20\",\"left\":\"0\"},\"column_button_row_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_row_border_type\":\"solid\",\"column_button_row_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_button_row_border_color\":\"#cccccc\",\"column_button_themes\":\"standart\",\"column_button_bg_color\":{\"color1\":\"\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_txt_color\":\"#323a46\",\"column_button_border_color\":\"#1da01b\",\"column_button_bg_color_hover\":{\"color1\":\"#1da01b\",\"color2\":\"#81d742\",\"gradient\":\"none\"},\"column_button_txt_color_hover\":\"#ffffff\",\"column_button_border_color_hover\":\"#1da01b\",\"column_button_border_type\":\"solid\",\"column_button_border_width\":\"1\",\"column_button_border_radius\":\"0\",\"column_button_font_size\":\"18\",\"column_button_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_button_padding\":{\"top\":\"10\",\"right\":\"20\",\"bottom\":\"10\",\"left\":\"20\"},\"column_button_margin\":{\"top\":\"0\",\"right\":\"5\",\"bottom\":\"0\",\"left\":\"5\"},\"column_animation_type\":\"random\",\"column_animation_delay\":\"0\"}';
+		$themes[3]['default']=0;
+
+		$themes[4]['id']=104;
+		$themes[4]['name']='Demo 2-3';
+		$themes[4]['option_value']='{\"name\":\"Demo 2-3\",\"column_type\":\"normal\",\"column_width\":\"280\",\"column_min_width\":\"180\",\"column_scale\":\"0\",\"column_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_outside_box_shadow\":\"\",\"column_outside_border_type\":\"solid\",\"column_outside_border_width\":{\"top\":\"1\",\"right\":\"1\",\"bottom\":\"1\",\"left\":\"1\"},\"column_outside_border_color\":\"#c9c9c9\",\"column_outside_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"text_align\":\"center\",\"column_title_bg_color\":{\"color1\":\"#086e97\",\"color2\":\"#ffffff\",\"gradient\":\"none\"},\"column_title_txt_color\":\"#ffffff\",\"column_title_font_size\":\"28\",\"column_title_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_title_padding\":{\"top\":\"5\",\"right\":\"0\",\"bottom\":\"5\",\"left\":\"0\"},\"column_title_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_title_border_type\":\"solid\",\"column_title_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_title_border_color\":\"#cccccc\",\"column_price_bg_color\":{\"color1\":\"#668896\",\"color2\":\"\",\"gradient\":\"none\"},\"column_price_txt_color\":\"#ffffff\",\"column_price_font_size\":\"28\",\"column_price_font_family\":\"Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Arial,sans-serif\",\"column_price_padding\":{\"top\":\"15\",\"right\":\"0\",\"bottom\":\"15\",\"left\":\"0\"},\"column_price_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_price_border_type\":\"solid\",\"column_price_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_price_border_color\":\"#cccccc\",\"column_feature_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_odd_bg_color\":{\"color1\":\"#ffffff\",\"color2\":\"\",\"gradient\":\"none\"},\"column_feature_txt_color\":\"#323a46\",\"column_feature_font_size\":\"15\",\"column_feature_font_family\":\"Segoe UI\",\"column_feature_padding\":{\"top\":\"12\",\"right\":\"0\",\"bottom\":\"12\",\"left\":\"0\"},\"column_feature_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_feature_border_type\":\"dashed\",\"column_feature_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"1\"},\"column_feature_border_color\":\"#cccccc\",\"column_aditional_text\":\"\",\"column_aditional_text_position\":\"above_the_title\",\"column_additional_text_border_type\":\"solid\",\"column_additional_text_border_width\":\"1\",\"column_additional_text_border_color\":\"#ffffff\",\"column_additional_text_border_radius\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_additional_text_bg_color\":{\"color1\":\"#1e73be\",\"color2\":\"\",\"gradient\":\"none\"},\"column_additional_text_color\":\"#ffffff\",\"column_additional_text_conteiner_width\":\"100\",\"column_additional_text_conteiner_align\":\"center\",\"column_additional_text_align\":\"center\",\"column_additional_text_font_size\":\"18\",\"column_additional_text_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_additional_text_distance_top_bottom\":{\"top\":\"0\",\"bottom\":\"5\"},\"column_additional_text_padding\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_bg_row_color\":{\"color1\":\"#f5f5f5\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_row_padding\":{\"top\":\"20\",\"right\":\"0\",\"bottom\":\"20\",\"left\":\"0\"},\"column_button_row_margin\":{\"top\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"left\":\"0\"},\"column_button_row_border_type\":\"solid\",\"column_button_row_top_bottom_border_wdith\":{\"top\":\"0\",\"bottom\":\"0\"},\"column_button_row_border_color\":\"#cccccc\",\"column_button_themes\":\"standart\",\"column_button_bg_color\":{\"color1\":\"\",\"color2\":\"\",\"gradient\":\"none\"},\"column_button_txt_color\":\"#323a46\",\"column_button_border_color\":\"#086e97\",\"column_button_bg_color_hover\":{\"color1\":\"#086e97\",\"color2\":\"#81d742\",\"gradient\":\"none\"},\"column_button_txt_color_hover\":\"#ffffff\",\"column_button_border_color_hover\":\"#086e97\",\"column_button_border_type\":\"solid\",\"column_button_border_width\":\"1\",\"column_button_border_radius\":\"0\",\"column_button_font_size\":\"18\",\"column_button_font_family\":\"Arial,Helvetica Neue,Helvetica,sans-serif\",\"column_button_padding\":{\"top\":\"10\",\"right\":\"20\",\"bottom\":\"10\",\"left\":\"20\"},\"column_button_margin\":{\"top\":\"0\",\"right\":\"5\",\"bottom\":\"0\",\"left\":\"5\"},\"column_animation_type\":\"random\",\"column_animation_delay\":\"0\"}';
+		$themes[4]['default']=0;		
+		
+		
+		$theme_ids= $wpdb->get_col('SELECT `id` FROM '.self::$table_names['theme']);
+		if(get_option('wpdevart_pricing_table_databese_status','0')!='free'){
+			foreach($themes as $value){
+				if(in_array($value['id'],$theme_ids)){
+					continue;
+				}
+				$wpdb->insert( self::$table_names['theme'], 
+					array( 
+						'id' => $value['id'],
+						'name' => $value['name'],
+						'option_value' => stripslashes($value['option_value']),
+						'default' => $value['default'],
+					), 
+					array( 
+						'%d', 
+						'%s',
+						'%s',
+						'%d'
+					) 
+				);
+			}
+		}
+		
+	}
+	
+	/*###################### Install tables function ##################*/	
+	
+	private function install_tables(){
+		global $wpdb;
+		
+		$tables[0]['id']=50;
+		$tables[0]['name']='Demo pricing table';
+		$tables[0]['columns']='[{\"title\":\"Simple\",\"price\":\"$ 2.99\\/mo*\",\"feature\":[\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\"],\"button_url\":\"#\",\"button_text\":\"Check It!\",\"theme\":\"100\"},{\"title\":\"Standard\",\"price\":\"$ 7.99\\/mo*\",\"feature\":[\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\"],\"button_url\":\"#\",\"button_text\":\"Check It!\",\"theme\":\"101\"},{\"title\":\"Extra\",\"price\":\"$ 11.99\\/mo*\",\"feature\":[\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\",\"Lorem Ipsum is simply text.\"],\"button_url\":\"#\",\"button_text\":\"Check It!\",\"theme\":\"100\"}]';
+		$tables[0]['widget_options']='{\"column_filds_ordering\":[\"title\",\"price\",\"feature\",\"button\"],\"distance_between_columns\":\"10\",\"table_align\":\"center\"}';
+		$table_ids= $wpdb->get_col('SELECT `id` FROM '.self::$table_names['columns']);
+		if(get_option('wpdevart_pricing_table_databese_status','0')!='free'){
+			foreach($tables as $value){
+				if(in_array($value['id'],$table_ids)){
+					continue;
+				}
+				$wpdb->insert( self::$table_names['columns'], 
+					array( 
+						'id' => $value['id'],
+						'name' => $value['name'],
+						'columns' => stripslashes($value['columns']),
+						'widget_options' => stripslashes($value['widget_options']),
+					), 
+					array( 
+						'%d', 
+						'%s',
+						'%s',
+						'%s'
+					) 
+				);
+			}
+		}
+		
+	}
+} 
+?>
